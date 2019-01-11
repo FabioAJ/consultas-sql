@@ -380,6 +380,211 @@ on g.id = a.idgafanhoto
 join cursos c
 on a.idcurso = c.idcurso;
 
+/*
+Exercicios do 1 ao 20 do site https://www.sqlteaching.com/
+*/
+
+/*
+Lesson 1: SELECT *
+*/
+select * from family_members;
+
+/*
+Lesson 2: SELECT specific columns
+*/
+SELECT name,species FROM family_members;
+
+
+/*
+Lesson 3: WHERE ... Equals
+*/
+select id,name,gender,species,num_books_read
+from family_members where species='dog';
+ 
+/*
+Lesson 4: WHERE ... Greater than
+*/
+select * from family_members where  num_books_read > 190;
+
+/*
+Lesson 5: WHERE ... Greater than or equal
+*/
+select * from family_members where  num_books_read >= 180;
+ 
+/*
+Lesson 6: AND
+*/
+select id,name,gender,species,height_cm
+from friends_of_pickles where  height_cm < 45 AND species = 'dog';
+
+/*
+Lesson 7: OR
+*/
+SELECT * FROM friends_of_pickles WHERE height_cm < 45 OR species = 'dog';
+
+/*
+Lesson 8: IN
+*/
+SELECT * FROM friends_of_pickles WHERE species NOT IN ('cat', 'dog');
+
+/*
+Lesson 9: DISTINCT
+*/
+select distinct species from friends_of_pickles where height_cm > 50;
+
+/*
+Lesson 10: ORDER BY
+*/
+select * from friends_of_pickles 
+order by height_cm desc;
+
+/*
+Lesson 11: LIMIT # of returned rows
+*/
+select id, name,gender,species,max (height_cm) height_cm from friends_of_pickles
+order by height_cm 
+limit 1;
+
+/*
+Lesson 12: COUNT(*)
+*/
+select count(*) from friends_of_pickles;
+
+/*
+Lesson 13: COUNT(*) ... WHERE
+*/
+select count(*) from friends_of_pickles WHERE species = 'dog'
+
+/*
+Lesson 14: SUM
+*/
+select sum(num_books_read) from family_members;
+
+/*
+Lesson 15: AVG
+*/
+select avg(num_books_read) from family_members;
+
+/*
+Lesson 16: MAX and MIN
+*/
+select max(num_books_read) from family_members;
+
+/*
+Lesson 17: GROUP BY
+*/
+select max(height_cm),species from friends_of_pickles 
+group by species;
+
+/*
+Lesson 18: Nested queries
+*/
+select * from family_members  where num_books_read = (select max(num_books_read) from family_members);
+
+/*
+Lesson 19: NULL
+*/
+select * from family_members where favorite_book not like 'null';
+
+/*
+Lesson 20: Date
+*/
+select * from celebs_born 
+where birthdate > '1980-01-9';
+
+/*
+Exercicios do 21 ao 31 do site https://www.sqlteaching.com/
+*/
+
+/*
+Lesson 21: Inner joins
+*/
+select character.name,character_actor.actor_name
+from character join character_actor
+on character.id = character_actor.character_id;
+
+/*
+Lesson 22: Multiple joins
+*/
+select c.name,a.name from character c 
+join character_actor ca 
+on c.id = ca.id
+join actor a
+on a.id = actor_id;
+
+/*
+Lesson 23: Joins with WHERE
+*/
+select character.name,tv_show.name from character join character_tv_show
+on character.id =character_tv_show.character_id
+join tv_show
+on character_tv_show.tv_show_id = tv_show_id 
+where character.name = 'Doogie Howser' and tv_show.name = 'Doogie Howser, M.D.' 
+and character.name != 'Willow Rosenberg' and  tv_show.name != 'How I Met Your Mother';
+
+/*
+Lesson 24: Left joins
+*/
+select c.name, a.name from character c left join character_actor ca
+on c.id = ca.character_id
+left join actor a
+on a.id = ca.actor_id;
+
+/*
+Lesson 25: Table alias
+*/
+select c.name, a.name 
+from character as c 
+left join character_actor AS ca
+on c.id = ca.character_id
+left join actor AS a
+on a.id = ca.actor_id;
+
+/*
+Lesson 26: Column alias
+*/
+select c.name AS character,a.name AS actor
+from character c 
+left join character_actor ca
+on c.id = ca.character_id
+left join actor a
+on a.id = ca.actor_id;
+
+/*
+Lesson 27: Self joins
+*/
+select epy.name AS employee_name,bos.name AS boss_name
+from employees AS epy join employees AS bos 
+on epy.boss_id = bos.id;
+
+/*
+Lesson 28: LIKE
+*/
+SELECT * FROM robots 
+WHERE name LIKE "%200%";
+
+/*
+Lesson 29: CASE
+*/
+SELECT *, CASE WHEN species = 'human' THEN "talk"
+WHEN species = 'cat'
+THEN 'meow'
+ELSE 'bark' END AS sound
+FROM friends_of_pickles;
+
+/*
+Lesson 30: SUBSTR
+*/
+SELECT * FROM robots 
+WHERE SUBSTR(location, -4,14) like '%NY';
+
+/*
+Lesson 31: COALESCE
+*/
+SELECT name, COALESCE(tank,gun,sword) as weapon FROM fighters; 
+
+
+
 
 
 
